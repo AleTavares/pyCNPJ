@@ -2,6 +2,7 @@
 import json
 import requests
 import time
+import bd
 def dadosCNPJ(cnpjConsulta):
     dadosEmpresa = requests.get('https://www.receitaws.com.br/v1/cnpj/'+cnpjConsulta)
     if dadosEmpresa.status_code == 200:
@@ -11,7 +12,7 @@ def dadosCNPJ(cnpjConsulta):
             if dadosExibir['status'] == 'OK':
                 resultado['nome'] = dadosExibir['nome']
                 resultado['uf'] = dadosExibir['uf']
-                resultado['ucapital_socialf'] = dadosExibir['capital_social']
+                resultado['capital_social'] = dadosExibir['capital_social']
                 return resultado
             elif dadosExibir['status'] == 'ERROR':
                 resultado['erro'] = dadosExibir['message']
@@ -33,9 +34,11 @@ for cnpj in cnpjBuscar:
     resposta = dadosCNPJ(cnpj)
     print(resposta)
     if 'nome' in resposta:
+        teste = bd.manutEmpres(cnpj, resposta['nome'], resposta['uf'], resposta['capital_social'])
+        print(teste)
         print('Nome:', resposta['nome'])
         print('UF:',  resposta['uf'])
-        print('Capital Social:',  resposta['ucapital_socialf'])
+        print('Capital Social:',  resposta['capital_social'])
     else:
         print('Erro:', resposta['erro'] )
     
