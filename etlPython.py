@@ -1,4 +1,3 @@
-#nome, UF e capital social
 import json
 import requests
 import time
@@ -31,15 +30,27 @@ cnpjBuscar = ['16501555000157', '14994237000140', '18727053000174', '13966572000
               '16569357000125', '16575851000100', '12592831000189']
 
 for cnpj in cnpjBuscar:
+    print(cnpj)
     resposta = dadosCNPJ(cnpj)
-    print(resposta)
     if 'nome' in resposta:
-        teste = bd.manutEmpres(cnpj, resposta['nome'], resposta['uf'], resposta['capital_social'])
-        print(teste)
-        print('Nome:', resposta['nome'])
-        print('UF:',  resposta['uf'])
-        print('Capital Social:',  resposta['capital_social'])
+        if bd.cnpjExiste(cnpj) == True:
+            alterou = bd.alterEmpresa(cnpj, resposta['nome'], resposta['uf'], resposta['capital_social'])
+            if alterou == 'OK':
+                print('CNPJ Atualizado com sucesso!')
+            else:
+                print('Não Foi Possivel alterar o CNPJ' + str(cnpj))
+                print(resposta)
+        else:
+            incluiu = bd.incEmpresa(cnpj, resposta['nome'], resposta['uf'], resposta['capital_social'])
+            if incluiu == 'OK':
+                print('CNPJ Incluido com Sucesso!')
+            else:
+                print('Não Foi Possivel Incluir o CNPJ' + str(cnpj))
+                print(resposta)
+    elif 'erro' in resposta:
+        print(resposta['erro'])
     else:
-        print('Erro:', resposta['erro'] )
-    
+        print('Erro inesperado, contacte o e-mail: portalatibaia@gmail.com')
+
+            
     
