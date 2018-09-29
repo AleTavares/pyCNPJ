@@ -12,6 +12,8 @@ def dadosCNPJ(cnpjConsulta):
                 resultado['nome'] = dadosExibir['nome']
                 resultado['uf'] = dadosExibir['uf']
                 resultado['capital_social'] = dadosExibir['capital_social']
+                resultado['municipio'] = dadosExibir['municipio']
+                resultado['email'] = dadosExibir['email']
                 return resultado
             elif dadosExibir['status'] == 'ERROR':
                 resultado['erro'] = dadosExibir['message']
@@ -33,14 +35,14 @@ for cnpj in cnpjBuscar:
     resposta = dadosCNPJ(cnpj)
     if 'nome' in resposta:
         if bd.cnpjExiste(cnpj) == True:
-            alterou = bd.alterEmpresa(cnpj, resposta['nome'], resposta['uf'], resposta['capital_social'])
+            alterou = bd.alterEmpresa(cnpj, resposta['nome'], resposta['uf'], resposta['capital_social'], resposta['municipio'], resposta['email'])
             if alterou == 'OK':
                 print('CNPJ Atualizado com sucesso!')
             else:
                 print('Não Foi Possivel alterar o CNPJ' + str(cnpj))
                 print(resposta)
         else:
-            incluiu = bd.incEmpresa(cnpj, resposta['nome'], resposta['uf'], resposta['capital_social'])
+            incluiu = bd.incEmpresa(cnpj, resposta['nome'], resposta['uf'], resposta['capital_social'], resposta['municipio'], resposta['email'])
             if incluiu == 'OK':
                 print('CNPJ Incluido com Sucesso!')
             else:
