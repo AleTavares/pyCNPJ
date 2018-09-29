@@ -9,3 +9,8 @@ CREATE TABLE tb_empresas(
     capitalSocial DECIMAL(16,2),
 	PRIMARY KEY(idEmpresa)
 );
+
+alter table tb_empresas add column Municipio varchar(100);
+
+alter table tb_empresas add column EMail varchar(100);
+

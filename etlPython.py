@@ -2,6 +2,8 @@ import json
 import requests
 import time
 import bd
+
+# Função para Consultar dados do CNPJ na API do ReceitaAWS
 def dadosCNPJ(cnpjConsulta):
     dadosEmpresa = requests.get('https://www.receitaws.com.br/v1/cnpj/'+cnpjConsulta)
     if dadosEmpresa.status_code == 200:
@@ -25,11 +27,12 @@ def dadosCNPJ(cnpjConsulta):
             dadosCNPJ(cnpjConsulta)
     else:
         print('### Falha na consulta, Aguarde 1 minuto que tentaremos novamente! ###')
-        time.sleep( 60 )
+        time.sleep( 60 ) # Está linha foi incluida pois a versão GRATUITA da API a cada 3 consultas tem que aguardar 1 minuto para nova consulta
         return dadosCNPJ(cnpjConsulta)
-
+# Le  Arquivo de CNPJ
 cnpjBuscar = open('listaCNPJ.txt', "r", encoding='iso-8859-1')
 
+# Percorre arquivo de CNPJ e grava os Dados
 for cnpj in cnpjBuscar:
     cnpj = cnpj.replace('\n', '')
     resposta = dadosCNPJ(cnpj)

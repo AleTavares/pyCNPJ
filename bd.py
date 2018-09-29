@@ -1,16 +1,18 @@
 import pymysql.cursors
-servidor = 'localhost'
-usuario = 'root'
-senha = 'suporte'
-banco = 'pyCNPJ'
+servidor = 'localhost' # Alterar para o Nome do Servidor
+usuario = 'root' # Alterar para o Usuario da sua base de dados
+senha = 'XXXXXX' # Alterar para a senha do usuario que foi definaida
+banco = 'pyCNPJ' # Nome da base de dados criada (Padrão do Script)
 
-# Connect to the database
+# Conectando com a BAse de Dados
 connection = pymysql.connect(host=servidor,
                              user=usuario,
                              password=senha,
                              db=banco,
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
+
+# Função para Incluir CNPJ no cadastro
 def incEmpresa(cnpj, nome, uf, capitalSocial, Municipio, EMail):
     try:
         with connection.cursor() as cursor:
@@ -22,6 +24,7 @@ def incEmpresa(cnpj, nome, uf, capitalSocial, Municipio, EMail):
     except Exception as e:
         return 'ERRO: '+ e
 
+# Função para verificar se o CNPJ Existe
 def cnpjExiste(cnpj):
     with connection.cursor() as cursor:
         # Read a single record
@@ -36,6 +39,8 @@ def cnpjExiste(cnpj):
                 return False
         else:
             return False
+
+# Função Para alterar Cadastro existentes
 def alterEmpresa(cnpj, nome, uf, capitalSocial, Municipio, EMail):
     try:
         with connection.cursor() as cursor:
