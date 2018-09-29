@@ -26,11 +26,10 @@ def dadosCNPJ(cnpjConsulta):
         time.sleep( 60 )
         return dadosCNPJ(cnpjConsulta)
 
-cnpjBuscar = ['16501555000157', '14994237000140', '18727053000174', '13966572000171', '12839955000116', 
-              '16569357000125', '16575851000100', '12592831000189']
+cnpjBuscar = open('listaCNPJ.txt', "r", encoding='iso-8859-1')
 
 for cnpj in cnpjBuscar:
-    print(cnpj)
+    cnpj = cnpj.replace('\n', '')
     resposta = dadosCNPJ(cnpj)
     if 'nome' in resposta:
         if bd.cnpjExiste(cnpj) == True:
@@ -51,6 +50,3 @@ for cnpj in cnpjBuscar:
         print(resposta['erro'])
     else:
         print('Erro inesperado, contacte o e-mail: portalatibaia@gmail.com')
-
-            
-    
