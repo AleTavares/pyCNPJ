@@ -26,7 +26,7 @@ def dadosCNPJ(cnpjConsulta):
         else:
             dadosCNPJ(cnpjConsulta)
     else:
-        print('### Falha na consulta, Aguarde 1 minuto que tentaremos novamente! ###')
+        print('### Falha na consulta, Aguardando 1 minuto que tentaremos novamente! ###')
         time.sleep( 60 ) # Está linha foi incluida pois a versão GRATUITA da API a cada 3 consultas tem que aguardar 1 minuto para nova consulta
         return dadosCNPJ(cnpjConsulta)
 # Le  Arquivo de CNPJ
